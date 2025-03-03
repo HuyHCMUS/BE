@@ -21,9 +21,8 @@ class ChatHistory(BaseModel):
 class Chatbot:
     def __init__(self, config_path: str = "/app/ai/config.yaml", history_limit: int = 20):
         # Load configuration
-        with open(config_path, "r") as f:
-            self.config = {}
-        
+
+        self.config = {}
         self.history_limit = history_limit
         self.llm = LLMFactory.create_llm(self.config, provider='google', type='chat')
         self.parser = JsonOutputParser(pydantic_object=ChatResponse)
