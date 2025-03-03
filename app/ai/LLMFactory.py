@@ -2,8 +2,9 @@ from langchain_openai import ChatOpenAI
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAI
 from langchain_community.llms import HuggingFaceHub
 # from langchain.llms.huggingface_pipeline import HuggingFacePipeline
+from dotenv import load_dotenv
 import os
-
+load_dotenv()
 
 class LLMFactory:
     @staticmethod
@@ -24,13 +25,11 @@ class LLMFactory:
             )
         elif provider == 'google':
             if type =='llm':
-                os.environ["GOOGLE_API_KEY"] = "AIzaSyAJCAzt_4sAKIwWJuhdYWynBZmHt2GSNGg"
                 return GoogleGenerativeAI(
                     model=model,
                     temperature=temperature,
                     max_tokens=max_tokens)
             else:
-                os.environ["GOOGLE_API_KEY"] = "AIzaSyAJCAzt_4sAKIwWJuhdYWynBZmHt2GSNGg"
                 return ChatGoogleGenerativeAI(
                     model=model,
                     temperature=temperature,
