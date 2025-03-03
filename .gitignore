@@ -1,0 +1,28 @@
+# Virtual environment
+venv/
+.env
+
+# Byte-compiled / cached
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Logs
+logs/
+*.log
+
+# IDE settings
+.vscode/
+.idea/
+
+# Dependency management
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Database files
+*.sqlite3
+
+# OS-specific files
+.DS_Store
+Thumbs.db
