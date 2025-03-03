@@ -24,9 +24,8 @@ class SentenceAnalysis(BaseModel):
 
 class ErrorDetection:
     def __init__(self, config_path: str = "/app/ai/config.yaml"):
-        with open(config_path, "r") as f:
-            self.config = yaml.safe_load(f)
 
+        self.config = {}
         self.llm = LLMFactory.create_llm(self.config,provider ='google',type='llm')
         self.parser = JsonOutputParser(pydantic_object=SentenceAnalysis)
         self.template = """You are an English teaching assistant. Analyze the following English-Vietnamese mixed sentence and provide corrections:
