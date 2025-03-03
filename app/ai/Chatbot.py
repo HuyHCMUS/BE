@@ -22,7 +22,7 @@ class Chatbot:
     def __init__(self, config_path: str = "/app/ai/config.yaml", history_limit: int = 20):
         # Load configuration
         with open(config_path, "r") as f:
-            self.config = yaml.safe_load(f)
+            self.config = {}
         
         self.history_limit = history_limit
         self.llm = LLMFactory.create_llm(self.config, provider='google', type='chat')

@@ -8,8 +8,8 @@ import os
 class LLMFactory:
     @staticmethod
     def create_llm(config: dict,provider = 'google', model='gemini-2.0-flash' ,type ='chat'):
-        temperature = config["llm"].get("temperature", 0.7)
-        max_tokens = config["llm"].get("max_tokens", 4096)
+        temperature =  0.7
+        max_tokens =  4096
 
         if provider == "openai":
             return ChatOpenAI(
