@@ -4,6 +4,10 @@ from sqlalchemy.orm import Session
 from app.db.session import get_db
 from app.services.auth import get_current_user
 from sqlalchemy.exc import SQLAlchemyError
+from app.ai.ConversastionQuestion import generate_conversation_question
+from app.ai.SpeakingQuestion import generate_speaking_question
+from app.ai.WritingQuestion import generate_writing_question
+from app.ai.ReadingQuestion import generate_reading_question
 import datetime
 
 # from app.models.auth import User
@@ -13,7 +17,7 @@ from app.schemas.content import QuestionSchema
 router = APIRouter()
 
 @router.get("/practice/{practice_type}", response_model=dict)
-async def get_practice_questions(practice_type: str, db: Session = Depends(get_db)):
+async def get_practice_questions(practice_type: str,topic: str, db: Session = Depends(get_db)):
     try:
         # user = db.query(User).filter(User.user_id == current_user_id).first()
         # print(f"User:",current_user_id)
@@ -22,8 +26,21 @@ async def get_practice_questions(practice_type: str, db: Session = Depends(get_d
         #         status_code=status.HTTP_404_NOT_FOUND,
         #         detail="User not found"
         #     )
-        questions = db.query(Question).filter(Question.practice_type == practice_type).all()
+        print(topic)
+        question_id = -1
+        if practice_type == "conversation":
+            question_id = generate_conversation_question(topic, db)
+        elif practice_type == "speaking":
+            question_id = generate_speaking_question(topic, db=db)
+        elif practice_type == "writing":
+            question_id = generate_writing_question(topic, db=db)
+        elif practice_type == "reading":
+            question_id = generate_reading_question(topic, db=db)
 
+        questions = db.query(Question).filter(
+            Question.practice_type == practice_type,
+            (Question.parent_id == question_id) | (Question.question_id == question_id)
+        ).all()
         formatted_questions = []
 
         for q in questions:
